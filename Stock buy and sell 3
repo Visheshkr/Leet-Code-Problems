@@ -1,0 +1,23 @@
+int maxProfit(vector& arr) {
+int n=arr.size();
+
+    //we want to set buys to negative,so that calculation can be convenient
+    //that's why we considerd buy as INT_MIN , sell are profit so they are 0
+    int first_buy=INT_MIN;
+    int second_buy=INT_MIN;
+    int first_sell=0;
+    int second_sell=0;
+    
+    for(int i=0;i<n;i++){
+        //initially money is spent from our pocket so first_buy will be -ve
+        first_buy=max(first_buy,-arr[i]);
+        //now we sold share at appropriate time
+        first_sell=max(first_sell,first_buy+arr[i]);
+        //now money in pocket==first_sell , now again spending money
+        second_buy=max(second_buy,first_sell-arr[i]);
+        //again we sold share at appropriate time 
+        second_sell=max(second_sell,second_buy+arr[i]);
+    }
+    //returning maximum after 2 transaction
+    return second_sell;
+}
