@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int n = prices.size();
+        if (n==0) return 0;
+        int dp[n][k+1];
+        memset(dp,0,sizeof(dp));
+        for (int i=0;i<n;i++){
+            for (int j=0;j<=k;j++){
+                if (i>0){
+                    dp[i][j]=max(dp[i][j],dp[i-1][j]);
+                }
+                if (j==0) continue;
+                for (int l=i-1;l>=0;l--){ 
+                    dp[i][j] = max(dp[l][j-1]+prices[i]-prices[l],dp[i][j]);
+                }
+            }
+        }
+        int res = 0;
+        res = *max_element(dp[n-1],dp[n-1]+k+1);
+        return res;
+    }
+};
